@@ -4,6 +4,8 @@ declare global {
     MarkdownHeaderButtonElement: typeof MarkdownHeaderButtonElement
     MarkdownBoldButtonElement: typeof MarkdownBoldButtonElement
     MarkdownItalicButtonElement: typeof MarkdownItalicButtonElement
+    MarkdownUnderlineButtonElement: typeof MarkdownUnderlineButtonElement
+    MarkdownStrikethroughButtonElement: typeof MarkdownStrikethroughButtonElement
     MarkdownQuoteButtonElement: typeof MarkdownQuoteButtonElement
     MarkdownCodeButtonElement: typeof MarkdownCodeButtonElement
     MarkdownLinkButtonElement: typeof MarkdownLinkButtonElement
@@ -19,6 +21,8 @@ declare global {
     'md-header': MarkdownHeaderButtonElement
     'md-bold': MarkdownBoldButtonElement
     'md-italic': MarkdownItalicButtonElement
+    'md-underline': MarkdownUnderlineButtonElement
+    'md-strikethrough': MarkdownStrikethroughButtonElement
     'md-quote': MarkdownQuoteButtonElement
     'md-code': MarkdownCodeButtonElement
     'md-link': MarkdownLinkButtonElement
@@ -36,6 +40,8 @@ const buttonSelectors = [
   'md-header',
   'md-bold',
   'md-italic',
+  'md-underline',
+  'md-strikethrough',
   'md-quote',
   'md-code',
   'md-link',
@@ -130,7 +136,7 @@ if (!window.customElements.get('md-header')) {
 class MarkdownBoldButtonElement extends MarkdownButtonElement {
   constructor() {
     super()
-    styles.set(this, {prefix: '**', suffix: '**', trimFirst: true})
+    styles.set(this, {prefix: '*', suffix: '*', trimFirst: true})
   }
 
   connectedCallback() {
@@ -159,6 +165,40 @@ class MarkdownItalicButtonElement extends MarkdownButtonElement {
 if (!window.customElements.get('md-italic')) {
   window.MarkdownItalicButtonElement = MarkdownItalicButtonElement
   window.customElements.define('md-italic', MarkdownItalicButtonElement)
+}
+
+class MarkdownUnderlineButtonElement extends MarkdownButtonElement {
+  constructor() {
+    super()
+    styles.set(this, {prefix: '__', suffix: '__', trimFirst: true})
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.setAttribute('hotkey', 'u')
+  }
+}
+
+if (!window.customElements.get('md-underline')) {
+  window.MarkdownUnderlineButtonElement = MarkdownUnderlineButtonElement
+  window.customElements.define('md-underline', MarkdownUnderlineButtonElement)
+}
+
+class MarkdownStrikethroughButtonElement extends MarkdownButtonElement {
+  constructor() {
+    super()
+    styles.set(this, {prefix: '~', suffix: '~', trimFirst: true})
+  }
+
+  connectedCallback() {
+    super.connectedCallback()
+    this.setAttribute('hotkey', 's')
+  }
+}
+
+if (!window.customElements.get('md-strikethrough')) {
+  window.MarkdownStrikethroughButtonElement = MarkdownStrikethroughButtonElement
+  window.customElements.define('md-strikethrough', MarkdownStrikethroughButtonElement)
 }
 
 class MarkdownQuoteButtonElement extends MarkdownButtonElement {

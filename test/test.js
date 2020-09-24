@@ -22,7 +22,7 @@ describe('markdown-toolbar-element', function () {
       assert(toolbar.field, 'textarea is found')
 
       toolbar.querySelector('md-bold').click()
-      assert(toolbar.field.value, '****')
+      assert(toolbar.field.value, '**')
     })
   })
 
@@ -92,6 +92,8 @@ describe('markdown-toolbar-element', function () {
           <md-header level="10">h1</md-header>
           <div data-md-button>Other button</div>
           <md-italic>italic</md-italic>
+          <md-underline>underline</md-underline>
+          <md-strikethrough>strikethrough</md-strikethrough>
           <md-quote>quote</md-quote>
           <md-code>code</md-code>
           <md-link>link</md-link>
@@ -196,132 +198,132 @@ describe('markdown-toolbar-element', function () {
       it('bold selected text when you click the bold icon', function () {
         setVisualValue('The |quick| brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
-        assert.equal('The **|quick|** brown fox jumps over the lazy dog', visualValue())
+        assert.equal('The *|quick|* brown fox jumps over the lazy dog', visualValue())
       })
 
       it('bolds selected text with hotkey', function () {
         focus()
         setVisualValue('The |quick| brown fox jumps over the lazy dog')
         pressHotkey('b')
-        assert.equal('The **|quick|** brown fox jumps over the lazy dog', visualValue())
+        assert.equal('The *|quick|* brown fox jumps over the lazy dog', visualValue())
       })
 
-      it('bold empty selection and textarea inserts ** with cursor ready to type inside', function () {
+      it('bold empty selection and textarea inserts * with cursor ready to type inside', function () {
         setVisualValue('|')
         clickToolbar('md-bold')
-        assert.equal('**|**', visualValue())
+        assert.equal('*|*', visualValue())
       })
 
-      it('bold empty selection with previous text inserts ** with cursor ready to type inside', function () {
+      it('bold empty selection with previous text inserts * with cursor ready to type inside', function () {
         setVisualValue('The |')
         clickToolbar('md-bold')
-        assert.equal('The **|**', visualValue())
+        assert.equal('The *|*', visualValue())
       })
 
       it('bold when there is leading whitespace in selection', function () {
         setVisualValue('|\n \t Hello world|')
         clickToolbar('md-bold')
-        assert.equal('\n \t **|Hello world|**', visualValue())
+        assert.equal('\n \t *|Hello world|*', visualValue())
       })
 
       it('bold when there is trailing whitespace in selection', function () {
         setVisualValue('|Hello world \n|')
         clickToolbar('md-bold')
-        assert.equal('**|Hello world|** \n', visualValue())
+        assert.equal('*|Hello world|* \n', visualValue())
       })
 
       it('bold selected word when cursor is at the start of the word', function () {
         setVisualValue('The |quick brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
-        assert.equal('The **|quick** brown fox jumps over the lazy dog', visualValue())
+        assert.equal('The *|quick* brown fox jumps over the lazy dog', visualValue())
       })
 
       it('bold selected word when cursor is in the middle of the word', function () {
         setVisualValue('The qui|ck brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
-        assert.equal('The **qui|ck** brown fox jumps over the lazy dog', visualValue())
+        assert.equal('The *qui|ck* brown fox jumps over the lazy dog', visualValue())
       })
 
       it('bold selected word when cursor is at the end of the word', function () {
         setVisualValue('The quick| brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
-        assert.equal('The **quick|** brown fox jumps over the lazy dog', visualValue())
+        assert.equal('The *quick|* brown fox jumps over the lazy dog', visualValue())
       })
 
       it('bold selected word when cursor is at the start of the first word', function () {
         setVisualValue('|The quick brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
-        assert.equal('**|The** quick brown fox jumps over the lazy dog', visualValue())
+        assert.equal('*|The* quick brown fox jumps over the lazy dog', visualValue())
       })
 
       it('bold selected word when cursor is in the middle of the first word', function () {
         setVisualValue('T|he quick brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
-        assert.equal('**T|he** quick brown fox jumps over the lazy dog', visualValue())
+        assert.equal('*T|he* quick brown fox jumps over the lazy dog', visualValue())
       })
 
       it('bold selected word when cursor is at the end of the first word', function () {
         setVisualValue('The| quick brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
-        assert.equal('**The|** quick brown fox jumps over the lazy dog', visualValue())
+        assert.equal('*The|* quick brown fox jumps over the lazy dog', visualValue())
       })
 
       it('unbolds selected bold inner text when you click the bold icon', function () {
-        setVisualValue('The **|quick|** brown fox jumps over the lazy dog')
+        setVisualValue('The *|quick|* brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
         assert.equal('The |quick| brown fox jumps over the lazy dog', visualValue())
       })
 
       it('unbolds selected bold outer text when you click the bold icon', function () {
-        setVisualValue('The |**quick**| brown fox jumps over the lazy dog')
+        setVisualValue('The |*quick*| brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
         assert.equal('The |quick| brown fox jumps over the lazy dog', visualValue())
       })
 
       it('unbold selected word when cursor is at the start of the word', function () {
-        setVisualValue('The **|quick** brown fox jumps over the lazy dog')
+        setVisualValue('The *|quick* brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
         assert.equal('The |quick brown fox jumps over the lazy dog', visualValue())
       })
 
       it('unbold selected word when cursor is in the middle of the word', function () {
-        setVisualValue('The **qui|ck** brown fox jumps over the lazy dog')
+        setVisualValue('The *qui|ck* brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
         assert.equal('The qui|ck brown fox jumps over the lazy dog', visualValue())
       })
 
       it('unbold selected word when cursor is at the end of the word', function () {
-        setVisualValue('The **quick|** brown fox jumps over the lazy dog')
+        setVisualValue('The *quick|* brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
         assert.equal('The quick| brown fox jumps over the lazy dog', visualValue())
       })
 
       it('unbold selected word when cursor is before the bold syntax', function () {
-        setVisualValue('The |**quick** brown fox jumps over the lazy dog')
+        setVisualValue('The |*quick* brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
         assert.equal('The |quick brown fox jumps over the lazy dog', visualValue())
       })
 
       it('unbold selected word when cursor is after the bold syntax', function () {
-        setVisualValue('The **quick**| brown fox jumps over the lazy dog')
+        setVisualValue('The *quick*| brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
         assert.equal('The quick| brown fox jumps over the lazy dog', visualValue())
       })
 
       it('unbold selected word when cursor is at the start of the first word', function () {
-        setVisualValue('**|The** quick brown fox jumps over the lazy dog')
+        setVisualValue('*|The* quick brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
         assert.equal('|The quick brown fox jumps over the lazy dog', visualValue())
       })
 
       it('unbold selected word when cursor is in the middle of the first word', function () {
-        setVisualValue('**T|he** quick brown fox jumps over the lazy dog')
+        setVisualValue('*T|he* quick brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
         assert.equal('T|he quick brown fox jumps over the lazy dog', visualValue())
       })
 
       it('unbold selected word when cursor is at the end of the first word', function () {
-        setVisualValue('**The|** quick brown fox jumps over the lazy dog')
+        setVisualValue('*The|* quick brown fox jumps over the lazy dog')
         clickToolbar('md-bold')
         assert.equal('The| quick brown fox jumps over the lazy dog', visualValue())
       })
